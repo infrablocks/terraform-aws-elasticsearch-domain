@@ -98,7 +98,7 @@ variable "enable_dedicated_master_nodes" {
 variable "enable_zone_awareness" {
   description = "Whether or not to enable zone awareness for the cluster (\"yes\" or \"no\")."
   type = string
-  default = "no"
+  default = "yes"
 }
 
 variable "enable_encryption_at_rest" {

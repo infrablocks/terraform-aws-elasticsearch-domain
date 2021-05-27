@@ -9,6 +9,14 @@ resource "aws_elasticsearch_domain" "elasticsearch" {
     instance_count           = var.elasticsearch_instance_count
     dedicated_master_enabled = var.enable_dedicated_master_nodes == "yes" ? true : false
     zone_awareness_enabled   = var.enable_zone_awareness == "yes" ? true : false
+
+    dynamic "zone_awareness_config" {
+      for_each = var.enable_zone_awareness == "yes" ? toset([length(var.subnet_ids)]) : toset([])
+
+      content {
+        availability_zone_count = zone_awareness_config.value
+      }
+    }
   }
 
   vpc_options {
