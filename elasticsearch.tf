@@ -16,7 +16,7 @@ resource "aws_elasticsearch_domain" "elasticsearch" {
       aws_security_group.elasticsearch.id,
     ]
 
-    subnet_ids = [var.subnet_ids]
+    subnet_ids = var.subnet_ids
   }
 
   advanced_options = var.elasticsearch_advanced_options
