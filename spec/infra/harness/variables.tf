@@ -15,3 +15,4 @@ variable "public_zone_id" {}
 variable "private_zone_id" {}
 
 variable "elasticsearch_domain_name" {}
+variable "elasticsearch_instance_count" {}

@@ -25,4 +25,5 @@ module "elasticsearch_domain" {
   private_zone_id = var.private_zone_id
 
   elasticsearch_domain_name = var.elasticsearch_domain_name
+  elasticsearch_instance_count = var.elasticsearch_instance_count
 }
