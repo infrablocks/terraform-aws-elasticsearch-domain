@@ -16,3 +16,4 @@ vars:
   private_zone_id: "%{hiera('private_zone_id')}"
 
   elasticsearch_domain_name: "%{hiera('elasticsearch_domain_name')}"
+  elasticsearch_instance_count: "%{hiera('elasticsearch_instance_count')}"
