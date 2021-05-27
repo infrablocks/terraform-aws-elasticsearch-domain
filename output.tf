@@ -1,19 +1,27 @@
-output "elastic_search_domain" {
-  value = "${aws_elasticsearch_domain.es.domain_name}"
+output "elasticsearch_domain_arn" {
+  value = aws_elasticsearch_domain.elasticsearch.arn
 }
 
-output "elastic_search_endpoint" {
-  value = "${aws_elasticsearch_domain.es.endpoint}"
+output "elasticsearch_domain_name" {
+  value = aws_elasticsearch_domain.elasticsearch.domain_name
 }
 
-output "elastic_search_private_dns" {
-  value = "${aws_route53_record.es_dns_private.fqdn}"
+output "elasticsearch_domain_address" {
+  value = local.address
 }
 
-output "elastic_search_kibana_endpoint" {
-  value = "${aws_elasticsearch_domain.es.kibana_endpoint}"
+output "elasticsearch_domain_endpoint" {
+  value = aws_elasticsearch_domain.elasticsearch.endpoint
 }
 
-output "elastic_search_security_group_id" {
-  value = "${aws_security_group.sg_elasticsearch.id}"
+output "elasticsearch_domain_kibana_endpoint" {
+  value = aws_elasticsearch_domain.elasticsearch.kibana_endpoint
+}
+
+output "elasticsearch_domain_security_group_id" {
+  value = aws_security_group.elasticsearch.id
+}
+
+output "elasticsearch_domain_security_group_arn" {
+  value = aws_security_group.elasticsearch.arn
 }

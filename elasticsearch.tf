@@ -1,27 +1,25 @@
 data "aws_caller_identity" "current" {}
 
-resource "aws_elasticsearch_domain" "es" {
-  domain_name           = "${var.elastic_search_domain}"
+resource "aws_elasticsearch_domain" "elasticsearch" {
+  domain_name           = var.elasticsearch_domain_name
   elasticsearch_version = "6.3"
 
   cluster_config {
-    instance_type            = "${var.instance_type}"
-    instance_count           = "${var.instance_count}"
-    dedicated_master_enabled = "${var.dedicated_master_enabled_count}"
-    zone_awareness_enabled   = "${var.zone_awareness_enabled}"
+    instance_type            = var.elasticsearch_instance_type
+    instance_count           = var.elasticsearch_instance_count
+    dedicated_master_enabled = var.enable_dedicated_master_nodes == "yes" ? true : false
+    zone_awareness_enabled   = var.enable_zone_awareness == "yes" ? true : false
   }
 
   vpc_options {
     security_group_ids = [
-      "${aws_security_group.sg_elasticsearch.id}",
+      aws_security_group.elasticsearch.id,
     ]
 
-    subnet_ids = ["${var.subnet_ids}"]
+    subnet_ids = [var.subnet_ids]
   }
 
-  advanced_options {
-    "rest.action.multi.allow_explicit_index" = "${var.allow_explicit_index}"
-  }
+  advanced_options = var.elasticsearch_advanced_options
 
   access_policies = <<CONFIG
 {
@@ -33,7 +31,7 @@ resource "aws_elasticsearch_domain" "es" {
         "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
       },
       "Action": "es:*",
-      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elastic_search_domain}/*"
+      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
     },
     {
       "Sid": "",
@@ -42,7 +40,7 @@ resource "aws_elasticsearch_domain" "es" {
         "AWS": "*"
       },
       "Action": "es:*",
-      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elastic_search_domain}/*"
+      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
     }
   ]
 }
@@ -50,19 +48,19 @@ CONFIG
 
   ebs_options {
     ebs_enabled = true
-    volume_size = "${var.volume_size}"
-    volume_type = "${var.volume_type}"
+    volume_size = var.elasticsearch_volume_size
+    volume_type = var.elasticsearch_volume_type
   }
 
   encrypt_at_rest {
-    enabled = "${var.encrypt_at_rest}"
+    enabled = var.enable_encryption_at_rest == "yes" ? true : false
   }
 
   snapshot_options {
-    automated_snapshot_start_hour = "${var.automated_snapshot_start_hour}"
+    automated_snapshot_start_hour = var.elasticsearch_automated_snapshot_start_hour
   }
 
-  tags {
-    Domain = "${var.elastic_search_domain}"
+  tags = {
+    Domain = var.elasticsearch_domain_name
   }
 }
