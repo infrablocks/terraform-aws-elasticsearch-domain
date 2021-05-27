@@ -68,6 +68,10 @@ CONFIG
     automated_snapshot_start_hour = var.elasticsearch_automated_snapshot_start_hour
   }
 
+  depends_on = [
+    aws_iam_service_linked_role.elasticsearch
+  ]
+
   tags = {
     Domain = var.elasticsearch_domain_name
   }
