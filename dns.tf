@@ -6,6 +6,7 @@ resource "aws_route53_record" "elasticsearch_public" {
   zone_id = var.public_zone_id
   name = local.address
   type = "CNAME"
+  ttl = 60
 
   records = [aws_elasticsearch_domain.elasticsearch.endpoint]
 
@@ -16,6 +17,7 @@ resource "aws_route53_record" "elasticsearch_private" {
   zone_id = var.private_zone_id
   name = local.address
   type = "CNAME"
+  ttl = 60
 
   records = [aws_elasticsearch_domain.elasticsearch.endpoint]
 
