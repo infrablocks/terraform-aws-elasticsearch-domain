@@ -13,6 +13,7 @@ module "elasticsearch_domain" {
   component = var.component
   deployment_identifier = var.deployment_identifier
 
+  region = var.region
   vpc_id = data.terraform_remote_state.prerequisites.outputs.vpc_id
   subnet_ids = data.terraform_remote_state.prerequisites.outputs.private_subnet_ids
 
