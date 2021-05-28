@@ -37,6 +37,10 @@ these can be created using any mechanism you like, the following modules may be
 of use: 
 * [AWS Base Networking](https://github.com/tobyclemson/terraform-aws-base-networking)
 
+See the 
+[Terraform registry entry](https://registry.terraform.io/modules/infrablocks/elasticsearch-domain/aws/latest) 
+for more details.
+
 ### Inputs
 
 | Name                  | Description                                      | Default | Required |
@@ -50,6 +54,11 @@ of use:
 
 | Name | Description |
 |------|-------------|
+
+### Compatibility
+
+This module is compatible with Terraform versions greater than or equal to 
+Terraform 0.14.
 
 Development
 -----------
