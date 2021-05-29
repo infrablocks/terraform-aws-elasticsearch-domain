@@ -110,4 +110,5 @@ variable "enable_encryption_at_rest" {
 variable "certificate_arn" {
   description = "ACM certificate ARN for your custom endpoint."
   type        = string
+  default     = null
 }
