@@ -1,8 +1,9 @@
 data "aws_caller_identity" "current" {}
 
+
 resource "aws_elasticsearch_domain" "elasticsearch" {
   domain_name           = var.elasticsearch_domain_name
-  elasticsearch_version = "6.3"
+  elasticsearch_version = var.elasticsearch_version
 
   cluster_config {
     instance_type            = var.elasticsearch_instance_type

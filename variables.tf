@@ -129,5 +129,10 @@ variable "enforce_https" {
   description = "Whether or not to require HTTPS."
   type        = bool
   default     = true
+}
 
+variable "elasticsearch_version" {
+  description = "Elastic Search version"
+  default     = "6.3"
+  type        = string
 }
