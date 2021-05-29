@@ -109,8 +109,8 @@ variable "enable_encryption_at_rest" {
 
 variable "use_custom_certificate" {
   description = "use custom certificate for domain"
-  type = string
-  default = "yes"
+  type        = string
+  default     = "yes"
 }
 
 variable "certificate_arn" {
