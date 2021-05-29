@@ -6,6 +6,7 @@ data "terraform_remote_state" "prerequisites" {
   }
 }
 
+
 module "elasticsearch_domain" {
   # This makes absolutely no sense. I think there's a bug in terraform.
   source = "./../../../../../../../"
@@ -26,4 +27,5 @@ module "elasticsearch_domain" {
 
   elasticsearch_domain_name = var.elasticsearch_domain_name
   elasticsearch_instance_count = var.elasticsearch_instance_count
+  use_custom_certificate = var.use_custom_certificate
 }

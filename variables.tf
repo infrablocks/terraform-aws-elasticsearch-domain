@@ -107,8 +107,14 @@ variable "enable_encryption_at_rest" {
   default     = "yes"
 }
 
+variable "use_custom_certificate" {
+  description = "use custom certificate for domain"
+  type = string
+  default = "yes"
+}
+
 variable "certificate_arn" {
   description = "ACM certificate ARN for your custom endpoint."
   type        = string
-  default     = null
+  default     = ""
 }

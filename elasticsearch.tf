@@ -1,4 +1,5 @@
 data "aws_caller_identity" "current" {}
+
 resource "aws_elasticsearch_domain" "elasticsearch" {
   domain_name           = var.elasticsearch_domain_name
   elasticsearch_version = "6.3"
@@ -64,7 +65,7 @@ CONFIG
   }
 
   domain_endpoint_options {
-    custom_endpoint_certificate_arn = var.certificate_arn ? var.certificate_arn : null
+    custom_endpoint_certificate_arn = var.use_custom_certificate == "yes" ? var.certificate_arn : null
   }
 
   snapshot_options {

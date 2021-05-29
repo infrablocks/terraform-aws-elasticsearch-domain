@@ -25,3 +25,4 @@ private_zone_id: 'Z2CDAFD23Q10HO'
 
 elasticsearch_domain_name: "%{hiera('component')}-%{hiera('deployment_identifier')}"
 elasticsearch_instance_count: 2
+use_custom_certificate: "no"

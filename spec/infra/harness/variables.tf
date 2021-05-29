@@ -16,3 +16,5 @@ variable "private_zone_id" {}
 
 variable "elasticsearch_domain_name" {}
 variable "elasticsearch_instance_count" {}
+
+variable "use_custom_certificate" {}
