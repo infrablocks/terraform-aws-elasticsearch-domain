@@ -65,10 +65,14 @@ CONFIG
     enabled = var.enable_encryption_at_rest == "yes" ? true : false
   }
 
-  domain_endpoint_options {
-    custom_endpoint_certificate_arn = var.use_custom_certificate == "yes" ? var.certificate_arn : null
-    enforce_https                   = var.enforce_https
-    tls_security_policy             = var.tls_security_policy
+  dynamic "domain_endpoint" {
+    for_each = var.use_custom_certificate == "yes" ? [1] : []
+    domain_endpoint_options {
+      custom_endpoint_certificate_arn = var.certificate_arn
+      enforce_https                   = var.enforce_https
+      tls_security_policy             = var.tls_security_policy
+    }
+
   }
 
   snapshot_options {
