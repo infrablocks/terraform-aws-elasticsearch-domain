@@ -68,10 +68,11 @@ CONFIG
   dynamic "domain_endpoint_options" {
     for_each = var.use_custom_certificate == "yes" ? [1] : []
     content {
-        custom_endpoint_certificate_arn = var.certificate_arn
-        enforce_https                   = var.enforce_https
-        tls_security_policy             = var.tls_security_policy
-      }
+      custom_endpoint_certificate_arn = var.certificate_arn
+      enforce_https                   = var.enforce_https
+      tls_security_policy             = var.tls_security_policy
+      custom_endpoint_enabled         = true
+    }
   }
 
   snapshot_options {
