@@ -120,12 +120,12 @@ variable "certificate_arn" {
 }
 
 
-variable "enforce_https" {
+variable "tls_security_policy" {
   description = "Name of the TLS security policy that needs to be applied to the HTTPS endpoint. Valid values: Policy-Min-TLS-1-0-2019-07 and Policy-Min-TLS-1-2-2019-07. Terraform will only perform drift detection if a configuration value is provided."
   default     = "Policy-Min-TLS-1-2-2019-07"
   type        = string
 }
-variable "tls_security_policy" {
+variable "enforce_https" {
   description = "Whether or not to require HTTPS."
   type        = bool
   default     = true
