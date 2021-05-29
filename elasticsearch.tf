@@ -72,6 +72,7 @@ CONFIG
       enforce_https                   = var.enforce_https
       tls_security_policy             = var.tls_security_policy
       custom_endpoint_enabled         = true
+      custom_endpoint                 = local.address
     }
   }
 
