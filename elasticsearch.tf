@@ -66,6 +66,8 @@ CONFIG
 
   domain_endpoint_options {
     custom_endpoint_certificate_arn = var.use_custom_certificate == "yes" ? var.certificate_arn : null
+    enforce_https                   = var.enforce_https
+    tls_security_policy             = var.tls_security_policy
   }
 
   snapshot_options {
