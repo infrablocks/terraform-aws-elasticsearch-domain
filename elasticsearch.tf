@@ -1,5 +1,4 @@
 data "aws_caller_identity" "current" {}
-
 resource "aws_elasticsearch_domain" "elasticsearch" {
   domain_name           = var.elasticsearch_domain_name
   elasticsearch_version = "6.3"
@@ -62,6 +61,10 @@ CONFIG
 
   encrypt_at_rest {
     enabled = var.enable_encryption_at_rest == "yes" ? true : false
+  }
+
+  domain_endpoint_options {
+    custom_endpoint_certificate_arn = var.certificate_arn ? var.certificate_arn : null
   }
 
   snapshot_options {
