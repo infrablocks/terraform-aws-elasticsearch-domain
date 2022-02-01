@@ -11,7 +11,7 @@ The Elasticsearch domain deployment requires:
 The Elasticsearch domain deployment consists of:
 * 
 
-![Diagram of infrastructure managed by this module](https://raw.githubusercontent.com/infrablocks/terraform-aws-elasticache-redis/master/docs/architecture.png)
+![Diagram of infrastructure managed by this module](https://raw.githubusercontent.com/infrablocks/terraform-aws-elasticache-redis/main/docs/architecture.png)
 
 Usage
 -----
