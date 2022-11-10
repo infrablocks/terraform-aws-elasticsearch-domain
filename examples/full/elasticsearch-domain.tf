@@ -18,4 +18,8 @@ module "elasticsearch_domain" {
   elasticsearch_domain_name = "${var.component}-${var.deployment_identifier}"
 
   certificate_arn = module.acm_certificate.certificate_arn
+
+  depends_on = [
+    module.acm_certificate
+  ]
 }
