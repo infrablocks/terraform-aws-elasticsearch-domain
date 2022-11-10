@@ -18,6 +18,6 @@ resource "aws_security_group" "elasticsearch" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = coalescelist(var.egress_cidrs, [data.aws_vpc.network.cidr_block])
+    cidr_blocks = coalescelist(local.egress_cidrs, [data.aws_vpc.network.cidr_block])
   }
 }

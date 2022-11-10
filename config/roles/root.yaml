@@ -1,7 +1,6 @@
 ---
-source_directory: "spec/infra/harness"
-state_file: "%{hiera('project_directory')}/state/harness.tfstate"
-
+configuration_directory: "%{cwd}/spec/unit/infra/root"
+state_file: "%{cwd}/state/root.tfstate"
 vars:
   region: "%{hiera('region')}"
 
@@ -9,12 +8,9 @@ vars:
   deployment_identifier: "%{hiera('deployment_identifier')}"
 
   allowed_cidrs: "%{hiera('allowed_cidrs')}"
-  egress_cidrs: "%{hiera('egress_cidrs')}"
 
   domain_name: "%{hiera('domain_name')}"
   public_zone_id: "%{hiera('public_zone_id')}"
   private_zone_id: "%{hiera('private_zone_id')}"
 
   elasticsearch_domain_name: "%{hiera('elasticsearch_domain_name')}"
-  elasticsearch_instance_count: "%{hiera('elasticsearch_instance_count')}"
-  use_custom_certificate: "%{hiera('use_custom_certificate')}"

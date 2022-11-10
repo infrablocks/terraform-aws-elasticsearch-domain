@@ -10,7 +10,7 @@ resource "aws_route53_record" "elasticsearch_public" {
 
   records = [aws_elasticsearch_domain.elasticsearch.endpoint]
 
-  count = var.include_public_dns_record == "yes" ? 1 : 0
+  count = local.include_public_dns_record == "yes" ? 1 : 0
 }
 
 resource "aws_route53_record" "elasticsearch_private" {
@@ -21,5 +21,5 @@ resource "aws_route53_record" "elasticsearch_private" {
 
   records = [aws_elasticsearch_domain.elasticsearch.endpoint]
 
-  count = var.include_private_dns_record == "yes" ? 1 : 0
+  count = local.include_private_dns_record == "yes" ? 1 : 0
 }

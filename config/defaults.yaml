@@ -1,13 +1,18 @@
 ---
 region: 'eu-west-2'
 
+vpc_cidr: '10.1.0.0/16'
+availability_zones:
+  - "eu-west-2a"
+  - "eu-west-2b"
+  - "eu-west-2c"
+
 component: 'test'
-deployment_identifier: "%{hiera('deployment_identifier')}"
+deployment_identifier: "%{hiera('seed')}"
 
-work_directory: 'build'
-configuration_directory: "%{hiera('work_directory')}/%{hiera('source_directory')}"
-
-domain_name: 'greasedscone.uk'
+domain_name: 'infrablocks.click'
+public_zone_id: "Z08829023L5IPIQBJOX63"
+private_zone_id: 'Z0211739BXR21FNN139O'
 
 allowed_cidrs:
   - '0.0.0.0/0'
@@ -15,14 +20,4 @@ egress_cidrs:
   - '10.0.0.0/8'
   - '192.168.0.0/16'
 
-vpc_cidr: '10.1.0.0/16'
-availability_zones:
-  - "eu-west-2a"
-  - "eu-west-2b"
-
-public_zone_id: 'Z4Q2X3ESOZT4N'
-private_zone_id: 'Z2CDAFD23Q10HO'
-
 elasticsearch_domain_name: "%{hiera('component')}-%{hiera('deployment_identifier')}"
-elasticsearch_instance_count: 2
-use_custom_certificate: "no"

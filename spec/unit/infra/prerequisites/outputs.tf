@@ -13,3 +13,7 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = module.base_network.private_subnet_ids
 }
+
+output "certificate_arn" {
+  value = module.acm_certificate.certificate_arn
+}

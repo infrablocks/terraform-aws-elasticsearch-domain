@@ -1,18 +1,51 @@
 data "aws_caller_identity" "current" {}
 
+// TODO: Work out if the wildcard access is really needed
+data "aws_iam_policy_document" "aws_access" {
+  statement {
+    sid = "AllowIAMToAccessElasticsearchDomain"
+    effect  = "Allow"
+    actions = ["es:*"]
+    principals {
+      identifiers = [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+      ]
+      type = "AWS"
+    }
+    resources = [
+      "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
+    ]
+  }
+  statement {
+    sid = "AllowAWSEntitiesToAccessElasticsearchDomain"
+    effect  = "Allow"
+    actions = ["es:*"]
+    principals {
+      identifiers = [
+        "*"
+      ]
+      type = "AWS"
+    }
+    resources = [
+      "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
+    ]
+  }
+}
 
 resource "aws_elasticsearch_domain" "elasticsearch" {
   domain_name           = var.elasticsearch_domain_name
-  elasticsearch_version = var.elasticsearch_version
+  elasticsearch_version = local.elasticsearch_version
 
   cluster_config {
-    instance_type            = var.elasticsearch_instance_type
-    instance_count           = var.elasticsearch_instance_count
-    dedicated_master_enabled = var.enable_dedicated_master_nodes == "yes" ? true : false
-    zone_awareness_enabled   = var.enable_zone_awareness == "yes" ? true : false
+    instance_type            = local.elasticsearch_instance_type
+    instance_count           = local.elasticsearch_instance_count
+    dedicated_master_enabled = local.enable_dedicated_master_nodes == "yes" ? true : false
+    zone_awareness_enabled   = local.enable_zone_awareness == "yes" ? true : false
 
     dynamic "zone_awareness_config" {
-      for_each = var.enable_zone_awareness == "yes" ? toset([length(var.subnet_ids)]) : toset([])
+      for_each = local.enable_zone_awareness == "yes" ? toset([
+        length(var.subnet_ids)
+      ]) : toset([])
 
       content {
         availability_zone_count = zone_awareness_config.value
@@ -28,56 +61,33 @@ resource "aws_elasticsearch_domain" "elasticsearch" {
     subnet_ids = var.subnet_ids
   }
 
-  advanced_options = var.elasticsearch_advanced_options
+  advanced_options = local.elasticsearch_advanced_options
 
-  access_policies = <<CONFIG
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
-      },
-      "Action": "es:*",
-      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
-    },
-    {
-      "Sid": "",
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "*"
-      },
-      "Action": "es:*",
-      "Resource": "arn:aws:es:${var.region}:${data.aws_caller_identity.current.account_id}:domain/${var.elasticsearch_domain_name}/*"
-    }
-  ]
-}
-CONFIG
+  access_policies = data.aws_iam_policy_document.aws_access.json
 
   ebs_options {
     ebs_enabled = true
-    volume_size = var.elasticsearch_volume_size
-    volume_type = var.elasticsearch_volume_type
+    volume_size = local.elasticsearch_volume_size
+    volume_type = local.elasticsearch_volume_type
   }
 
   encrypt_at_rest {
-    enabled = var.enable_encryption_at_rest == "yes" ? true : false
+    enabled = local.enable_encryption_at_rest == "yes" ? true : false
   }
 
   dynamic "domain_endpoint_options" {
-    for_each = var.use_custom_certificate == "yes" ? [1] : []
+    for_each = local.use_custom_certificate == "yes" ? [1] : []
     content {
-      custom_endpoint_certificate_arn = var.certificate_arn
-      enforce_https                   = var.enforce_https
-      tls_security_policy             = var.tls_security_policy
+      custom_endpoint_certificate_arn = local.certificate_arn
+      enforce_https                   = local.enforce_https
+      tls_security_policy             = local.tls_security_policy
       custom_endpoint_enabled         = true
       custom_endpoint                 = local.address
     }
   }
 
   snapshot_options {
-    automated_snapshot_start_hour = var.elasticsearch_automated_snapshot_start_hour
+    automated_snapshot_start_hour = local.elasticsearch_automated_snapshot_start_hour
   }
 
   depends_on = [
