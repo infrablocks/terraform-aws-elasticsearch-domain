@@ -102,7 +102,7 @@ describe 'elasticsearch domain' do
       expect(@plan)
         .to(include_resource_creation(type: 'aws_elasticsearch_domain')
               .with_attribute_value(
-                [:vpc_options, 0, :subnet_ids], contain_exactly(*subnet_ids)
+                [:vpc_options, 0, :subnet_ids], match_array(subnet_ids)
               ))
     end
 
