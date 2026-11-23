@@ -1,7 +1,7 @@
 Terraform AWS Elasticsearch Domain
 ==================================
 
-[![CircleCI](https://circleci.com/gh/infrablocks/terraform-aws-elasticsearch-domain.svg?style=svg)](https://circleci.com/gh/infrablocks/terraform-aws-elasticsearch-domain)
+[![Main](https://github.com/infrablocks/terraform-aws-elasticsearch-domain/actions/workflows/main.yaml/badge.svg)](https://github.com/infrablocks/terraform-aws-elasticsearch-domain/actions/workflows/main.yaml)
 
 A Terraform module for deploying an Elasticsearch domain in AWS.
 
@@ -196,16 +196,16 @@ To decrypt the resulting key:
 openssl rsa -in key.pem -out ssl.key
 ```
 
-#### Managing CircleCI keys
+#### Managing CI keys
 
-To encrypt a GPG key for use by CircleCI:
+To encrypt a GPG key for use by CI:
 
 ```bash
 openssl aes-256-cbc \
   -e \
   -md sha1 \
   -in ./config/secrets/ci/gpg.private \
-  -out ./.circleci/gpg.private.enc \
+  -out ./.github/gpg.private.enc \
   -k "<passphrase>"
 ```
 
@@ -215,7 +215,7 @@ To check decryption is working correctly:
 openssl aes-256-cbc \
   -d \
   -md sha1 \
-  -in ./.circleci/gpg.private.enc \
+  -in ./.github/gpg.private.enc \
   -k "<passphrase>"
 ```
 
